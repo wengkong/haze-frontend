@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="employee-list">
+<!--
+    <template>
+        <iron-ajax
+            auto
+            url="http://www.filltext.com"
+            params='{"rows":"2", "fname":"{firstName}", "lname":"{lastName}"}'
+            handle-as="json"
+            on-request="handleRequest"
+            last-response="{{employees}}">
+        </iron-ajax>
+        <div>Employee list...</div><br>
+        <template is="dom-repeat" items="{{employees}}">
+            <div>
+                First Name: <span>{{item.fname}}</span> Last Name: <span>{{item.lname}}</span>
+            </div>            
+        </template>
+    </template>
+-->
+
+    <template>
+        <iron-ajax
+            auto
+            url="http://10.0.2.2:8080/employees"
+            handle-as="json"
+            on-request="handleRequest"
+            last-response="{{employees}}">
+        </iron-ajax>
+        <div>Employee list...</div><br>
+        <template is="dom-repeat" items="{{employees}}">
+            <div>{{item.email}}</div>
+            <div>{{item.fullName}}</div><br>
+        </template>
+    </template>
+
+    <script>
+        Polymer({
+            is: "employee-list",
+            ready: function() {
+                console.log('employee-list ready...')
+            },
+            handleRequest: function(e) {
+                console.log('employees request...');
+            },
+            handleResponse: function(e) {
+                console.log('employees response...');
+                this.employees = e.detail.response;
+                console.log('list: ' + this.employees);
+            }
+        });
+    </script>
+</dom-module>
